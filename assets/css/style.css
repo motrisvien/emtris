@@ -1,0 +1,575 @@
+/* Reset CSS */
+/* 
+1. Vị trí
+2. Kích thước
+3. Màu sắc
+4. Kiểu dáng (Kiểu chữ, hình tròn, vuông,...) */
+
+/* 
+Nguyên tắc làm việc
+1. Từ ngoài vào trong
+2. Từ trên xuống dưới
+3. Từ tổng quan đến chi tiết
+ */
+
+ /* Khi sử dụng float, các phần tử phía sau có thể bị trôi lên hoặc bao bọc quanh phần tử float, 
+ làm hỏng bố cục trang web. Thuộc tính clear giúp ngăn chặn điều này bằng cách buộc phần tử đứng sau phải xuống dưới phần tử đã float, 
+ thay vì bị đẩy lên bên cạnh. */
+/* clear: left; → Ngăn phần tử này (đoạn văn) đứng cạnh phần tử float: left (hình ảnh).
+clear: right; → Ngăn phần tử này đứng cạnh phần tử float: right.
+clear: both; → Ngăn phần tử này đứng cạnh bất kỳ phần tử nào có float (dù là trái hay phải). */
+
+/* Common - Các class dùng chung, nhằm tối ưu code */
+.clear {
+  clear: both;
+}
+
+/* Bất cứ đoạn code nào khi thêm class này thì chữ cũng sẽ có màu trắng */
+.text-white {
+  color: #fff !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.mt-8 {
+  margin-top: 8px !important;
+}
+
+.mt-16 {
+  margin-top: 16px !important;
+}
+
+/* Create system - hệ thống lưới hay tiêu chuẩn thiết kế */
+.row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+/* Pseudo code - Mã giã: Đây là cách viết html trong css 
+DÙng cái này không cần dùng div clear*/
+.row::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.col {
+  float: left;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.col-full {
+  width: 100%;
+}
+
+.col-half {
+  width: 50%;
+}
+
+.col-third {
+  width: 33.33333%;
+}
+
+
+/* Áp dụng lên tất cả các phần tử */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Chỉ sử dụng cho những phần tử chứa chữ */
+html {
+  /* theo thứ tự là: font - font - chủng font */
+  font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* main */
+#main {
+  
+}
+
+#header {
+   height: 46px;
+   background-color: black;
+   /* Thêm thuộc tính bám dính fixed vào header khi trình duyệt dài hơn trang web 
+   và giúp thẻ header đứng tĩnh*/
+   position: fixed;
+   /* Đảm bảo trên mọi trình duyệt top=0 */
+   top: 0;
+   /* Dính 2 bên header vào 2 bên màn hình */
+   left: 0;
+   right: 0;
+   /* Thuộc tính giúp chìm nổi phần tử */
+   z-index: 1;
+}
+
+#nav, .subnav {
+  /* Kiểu danh sách mặc đinh là none, áp dụng cho ul li */
+  list-style-type: none;
+}
+
+#nav {
+  /* Làm mất tính kế thừa 100% chiều ngang thẻ cha là header */
+  display: inline-block;
+}
+
+/* Chỉ cho phần tử li ở cấp 1 có thuộc tính inline-block */
+#nav > li {
+  display: inline-block;
+}
+
+/* Các thẻ li bên trong nav */
+#nav li {
+  /* Các phần tử li là con của nav sẽ mang thuộc tính relative */
+  position: relative;
+}
+
+/* Subnav hay submenu(Theo nguồn tra được) là thư mục con của nav hay của menu */
+/* Cách biểu diễn này giúp sử dụng các thuộc tính bên trong subnav 
+và chỉ ảnh hưởng đến subnav là con của nav */
+#nav .subnav {
+  /* Ẩn phần tử thẻ li */
+  display: none;
+  /* Chiều dài tối thiểu */
+  min-width: 160px;
+  /* Phần tử có id subnav sẽ chịu ảnh hưởng của #nav li {} */
+  position: absolute;
+  background-color: #fff;
+  /* Lớp bóng đổ */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#nav .subnav a {
+  color: #000;
+  /* Dùng nguyên tắc kích thước chia hết cho 4 tạo khoảng cách */
+  padding: 0 12px;
+  /* Thuộc tính này chỉ định chiều cao của 1 dòng, dùng để tạo khoảng cách giữa các dòng */
+  /* Xét lại chiều cao các phần tử trong subnav cho ngắn lại*/
+  line-height: 38px;
+}
+
+/* Css vào hậu duệ trực tiếp */
+#nav > li > a {
+  color: #fff;
+  /* Chữ viết hoa */
+  text-transform: uppercase;
+}
+
+/* Css vào thẻ a là con của li là con của nav */
+#nav li a {
+  /* Theo giả thuyết của mình, 
+  thẻ a chịu ảnh hưởng thẻ li nên tất cả các thẻ li và a bên trong #nav sẽ chịu ảnh hưởng thuộc tính block, 
+  mà bên trên hậu duệ trực tiếp(trực hệ hay child-selector) của #nav là li đã chịu ảnh hưởng của thuộc tính inline-block 
+  nên các phần tử child-selector đó nằm trên 1 dòng, các phần tử thẻ a là ăn theo chứa thuộc tính block 
+  là chiếm toàn bộ phần chiều dài của nó trong giới hạn phạm vi li */
+  display: block;
+  text-decoration: none;
+  top: 100%;
+  left: 0;
+  /* Khoảng cách giữa chữ và khoảng trống: Phần tử: ([<->Chữ<->]) (hình dung theo chiều dọc)*/
+  line-height: 46px;
+  padding: 0 24px;
+}
+
+/* Hiển thị phần subnav hay ghi đè display:none*/
+#nav li:hover .subnav {
+  display: block;
+}
+
+/* Hover cho li để khi hover vào thẻ con của thẻ More thì thẻ More sẽ bị không mất màu */
+#nav > li:hover > a,
+#nav .subnav > li:hover a {
+  color: #000;
+  background-color: #ccc;
+}
+
+/* Chỉnh icon arrow-down ở header*/
+#nav .nav-arrow-down {
+  /* Icon cũng thuộc kiểu font */
+  font-size: 14px;
+}
+
+#header .search-btn {
+  /* Thuộc tính giúp phần tử trôi nổi ở bên nào(ở đây cụ thể là bên phải) */
+  float: right;
+  padding: 0 21px;
+}
+/* Khi di vào nút button search đổi màu */
+#header .search-btn:hover {
+  background-color: #f44336;
+  /* Thuộc tính thay đổi hình dạng trỏ chuột */
+  cursor: pointer;
+}
+
+/* Chỉnh icon search ở header */
+#header .search-icon {
+  color: #fff;
+  font-size: 20px;
+  line-height: 46px;
+}
+
+#slider {
+  /* Thuộc tính position ở slider giúp bảo toàn kích thước slider và để text-content nằm trên 1 lớp so với slider 
+  nhằm tránh chiếm thêm diện tích slider  */
+  position: relative;
+  /* Vì thuộc tính position ở header là fixe nên slider sẽ chiếm luôn nên cần khoảng trống */
+  margin-top: 46px;
+  /* Chiều cao bằng 1/2 chiều ngang */
+  padding-top: 50%;
+  background: url('/assets/img/slider/slider_chicago.jpg') top center / cover no-repeat;
+}
+
+#slider .text-content {
+  /* Thuộc tính absolute chỉnh vị trí chữ trong slider 
+  3 thuộc tính đi cùng nhau căn giữa 1 phần tử theo chiều ngang gồm
+  position, left, transform*/
+  position: absolute;
+  /* Di chuyển méo trái của phần tử đến 50% chiều rộng phần tử cha */
+  /* Tuy nhiên, lúc này mép trái của phần tử nằm ở giữa phần tử cha, khiến phần tử bị lệch sang phải */
+  /* left: 50%; */
+  /* Thuộc tính transform áp dụng phép biến đổi 2d, 3d cho phần tử mà cụ thể ở đây là 
+  Dịch chuyển phần tử theo chiều ngang (trục X) một khoảng bằng 50% chiều rộng của chính nó về bên trái.*/
+  /* transform: translateX(-50%); */
+  width: 100%;
+  /* Cách phía bên dưới slider 47px */
+  bottom: 47px;
+  color: #fff;
+  /* Căn giữa văn bản */
+  text-align: center;
+}
+#slider .text-heading {
+  /* Độ dày chữ */
+  font-weight: 500;
+  font-size: 24px;
+}
+#slider .text-description {
+  margin-top: 25px;
+}
+
+#content {
+
+}
+
+#content .content-section {
+  width: 800px;
+  padding: 64px 0;
+  margin: 0 auto;
+}
+
+#content .section-heading {
+  font-size: 30px;
+  font-weight: 500;
+  text-align: center;
+  /* Khoảng cách các chữ trong từ */
+  letter-spacing: 3px;
+}
+
+#content .section-sub-heading {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 25px;
+  /* Thuộc tính phong cách của font, ở đây là nghiêng*/
+  font-style: italic;
+  /* Thuộc tính làm mờ */
+  opacity: 0.6;
+}
+
+#content .about-text {
+  margin-top: 25px;
+  font-size: 15px;
+  /* Căn đều 2 bên */
+  text-align: justify;
+  line-height: 1.5;
+}
+
+#content .members-list {
+  margin-top: 48px;
+}
+
+#content .member-name {
+  font-size: 15px;
+}
+
+#content .member-img {
+  width: 154px;
+  margin-top: 15px;
+  /* Bo góc ảnh */
+  border-radius: 4px;
+}
+
+.tour-section {
+  background-color: #000;
+}
+
+.tickets-list { 
+  background-color: #fff;
+  margin-top: 40px;
+}
+
+.tickets-list li {
+  color: #757575;
+  font-size: 15px;
+  padding: 8px 16px;
+  /* Đường viền */
+  border-bottom: 1px solid #ddd;
+   /* Kiểu danh sách mặc đinh là none, áp dụng cho ul li */
+   list-style-type: none;
+}
+
+.tickets-list .sold-out {  
+  background-color: #f44336;
+  color: #fff;
+  padding: 3px 8px;
+  margin: 0 0 0 16px;
+}
+
+.tickets-list .quantity {
+  /* Thuộc tính float đi cùng thuộc tính display: block 
+  Khi bỏ đi float sẽ quay về trạng thái display: inline của thẻ span*/
+  float: right;
+  background-color: #000;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 50%;
+  /* Do cái hình tròn bị thụt xuống tầm 3px nên cần lùi lên 3px */
+  margin-top: -3px;
+}
+
+/* Places */
+.places-list {
+  margin-top: 32px;
+  margin-bottom: 48px;
+}
+
+.place-img {
+  width: 100%;
+  /* Loại bỏ khoảng cách giữa ảnh và content */
+  display: block;
+}
+
+.place-img:hover {
+  opacity: 0.6;
+}
+
+.place-body {
+  background-color: #fff;
+  padding: 16px;
+  font-size: 15px;
+}
+
+.place-heading {
+  margin-top: 15px;
+}
+
+.place-time {
+  margin-top: 15px;
+  color: #757575;
+}
+
+.place-desc {
+  margin: 15px 0;
+  line-height: 1.4;
+}
+
+.place-buy-btn {
+  padding: 8px 16px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.place-buy-btn:hover {
+  background-color: #ccc;
+  color: #000;
+}
+
+/* Giao diện model và lớp phủ overlay*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Lớp phủ overlay */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Căn giữa phần tử theo chiều dọc */
+  align-items: center;
+  /* Căn giữa phần tử theo chiều ngang */
+  justify-content: center;
+  display: none;
+}
+
+/* ✔ Dùng .class1.class2 khi cần điều kiện cụ thể để đảm bảo style chỉ áp dụng khi cả hai class xuất hiện cùng lúc, tránh ảnh hưởng ngoài ý muốn.*/
+/* ✔ Dùng .class1 {} và .class2 {} riêng biệt khi cần tái sử dụng style linh hoạt cho nhiều phần tử khác nhau. */
+.modal.open {
+  display: flex;
+}
+
+.modal-container {
+  position: relative;
+  background-color: #fff;
+  width: 900px;
+  max-width: calc(100% - 32px);
+  min-height: 200px;
+  /* animation: gọi hàm chuyển động + kiểu chuyển động + thời gian chuyển động */
+  animation: modalFadeIn ease .5s;
+}
+
+.modal-header {
+  background: #009688;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #fff;
+}
+
+.modal-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #fff;
+  padding: 12px;
+}
+
+.modal-close:hover, #buy-tickets:hover, .contact-content .form-submit-btn:hover {
+  background-color: #ccc;
+  color: #000;
+  /* Thay đổi hình dạng trỏ chuột */
+  cursor: pointer;
+}
+
+.modal-buy-ticket {
+  margin-right: 16px;
+}
+
+.modal-body {
+  padding: 0 16px;
+}
+
+.modal-label {
+  display: block;
+  font-size: 15px;
+  margin: 15px 0;
+}
+
+.modal-input {
+  display: block;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+#buy-tickets {
+  display: block;
+  margin: 15px 0;
+  padding: 16px;
+  width: 100%;
+  background-color: #009688;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  /* Viết hoa */
+  text-transform: uppercase;
+}
+
+.modal-footer .modal-help {
+  text-align: right;
+  padding: 16px;
+  font-size: 15px;
+}
+
+.modal-help a {
+  color: #2196F3;
+}
+
+.contact-content {
+  margin-top: 48px;
+}
+
+.contact-infor {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+/* Sử dụng Attribute Selector ([attr*="value"]) để chọn các phần tử <i> có class chứa chuỗi "ti-" bên trong, 
+nhưng chỉ khi nó nằm trong phần tử có class .contact. */
+.contact-infor i[class*="ti-"] {
+  width: 30px;
+  display: inline-block;
+}
+
+.contact-form {
+  font-size: 15px;
+}
+
+.contact-form .form-control {
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  /* Đường viền ngoài thẻ input*/
+  outline: none;
+}
+
+.contact-form .form-submit-btn {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+  padding: 10px 16px;
+  float: right;
+  border: none;
+}
+.full-right {
+  float: right ;
+}
+.map-section img{
+  width: 100%;
+}
+#footer {
+  text-align: center;
+  padding: 64px 16px;
+}
+#footer .social{
+  font-size: 24px;
+}
+#footer .social a{
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+}
+#footer .social a:hover{
+  color: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+
+}
+#footer .copyright {
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 15px;
+}
+#footer .copyright a{
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+/* Tạo ra chuyển động lên xuống cho modal */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    /* Từ vị trí Y = - 100px */
+    transform: translateY(-130px);
+  }
+
+  to {
+    opacity: 1;
+    /* Đến vị trí Y = 0 */
+    transform: translateY(0);
+  }
+}
