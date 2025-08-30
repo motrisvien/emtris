@@ -221,7 +221,7 @@ và chỉ ảnh hưởng đến subnav là con của nav */
   margin-top: 46px;
   /* Chiều cao bằng 1/2 chiều ngang */
   padding-top: 50%;
-  background: url('/assets/img/slider/slider_chicago.jpg') top center / cover no-repeat;
+  background: url('./assets/img/slider/slider_chicago.jpg') top center / cover no-repeat;
 }
 
 #slider .text-content {
